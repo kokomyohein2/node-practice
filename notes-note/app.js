@@ -8,7 +8,7 @@ const notes = require('./notes.js')
 // console.log(_.isString(true));
 // console.log(_.isString("KoKo"));
 var fileredArray = _.uniq(['koko',1,'koko',1,2,3,4])
-console.log();
+console.log(fileredArray);
 
 // console.log('Result : ',notes.add(9,-2));
 
