@@ -36,10 +36,11 @@ geocode.geocodeAddress(argv.a, argv.key, (errorMessage, results) => {
     }
 });
 
-weather.getWeather(13.75398, 100.50144, argv.wKey, (errorMessage, results) => {
+weather.getWeather(13.75398, 100.50144, argv.wKey, (errorMessage, weatherResult) => {
     if (errorMessage) {
         console.log(errorMessage);
     } else {
-        console.log(JSON.stringify(results, undefined, 2));
+        console.log(`It's currently ${weatherResult.temperature}. It feels like ${weatherResult.apparentTemperature}.`)
+        // console.log(JSON.stringify(weatherResult, undefined, 2));
     }
 });
