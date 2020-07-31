@@ -2,14 +2,18 @@
 <html>
 
 <head>
+    <title>Help</title>
+    <link rel="icon" href="/img/weather.png">
     <link rel="stylesheet" href="/css/styles.css">
     <script src="/js/app.js"></script>
 </head>
 
 <body>
-<h1>{{title}}</h1>
-<img src="/img/sony.png">
-<p>Created by {{name}}</p>
+<div class="main-content">
+    {{>header}}
+    <p>{{text}}</p>
+</div>
+{{>footer}}
 </body>
 
 </html>
