@@ -1,6 +1,8 @@
 const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
+const geocode = require('./utils/geocode');
+const weather = require('./utils/weather');
 
 const app = express();
 const publicDirectoryPath = path.join(__dirname, '../public');
@@ -36,20 +38,52 @@ app.get('/help', (req, res) => {
 
 app.get('/help/*', (req, res) => {
     res.render('404', {
-    title: '404',
-    name: 'KoKo',
-    errorMessage:'Help article not found.'})
+        title: '404',
+        name: 'KoKo',
+        errorMessage: 'Help article not found.'
+    });
 });
 
 app.get('/weather', (req, res) => {
-    res.send('Weather  Page');
+    if (!req.query.address || !req.query.apiKeyMap || !req.query.apiKeyWeather) {
+        res.send({
+            error: 'You must provide all.'
+        });
+    }
+
+    geocode.geocodeAddress(req.query.address, req.query.apiKeyMap, (error, mapResults) => {
+        if (error) {
+            res.send({
+                nameSpace: 'map',
+                error
+            });
+        } else {
+            console.log(JSON.stringify(mapResults, undefined, 2));
+            weather.getWeather(mapResults.latitude, mapResults.longitude, req.query.apiKeyWeather, (error, weatherResult) => {
+                if (error) {
+                    res.send({
+                        nameSpace: 'weather',
+                        error
+                    });
+                } else {
+                    console.log(`It's currently ${weatherResult.temperature}. It feels like ${weatherResult.apparentTemperature}.`);
+                    res.send({
+                        forecast: `It's currently ${weatherResult.temperature}. It feels like ${weatherResult.apparentTemperature}.`,
+                        location: req.query.address,
+                        address: mapResults.address
+                    });
+                }
+            });
+        }
+    });
 });
 
 app.get('*', (req, res) => {
     res.render('404', {
-    title: '404',
-    name: 'KoKo',
-    errorMessage:'It is not found.'})
+        title: '404',
+        name: 'KoKo',
+        errorMessage: 'It is not found.'
+    })
 });
 
 app.listen(3000, () => {
