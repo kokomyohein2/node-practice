@@ -18,7 +18,7 @@ weatherForm.addEventListener('submit', (e) => {
     message1.textContent = 'Loading...';
     message2.textContent = '';
 
-    fetch(`http://localhost:3000/weather?address=${search.value}&apiKeyMap=${apiKeyMap.value}&apiKeyWeather=${apiKeyWeather.value}`).then((response) => {
+    fetch(` /weather?address=${search.value}&apiKeyMap=${apiKeyMap.value}&apiKeyWeather=${apiKeyWeather.value}`).then((response) => {
         response.json().then((data) => {
             if (data.error) {
             console.log('nameSpace '+data);
