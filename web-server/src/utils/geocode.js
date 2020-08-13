@@ -8,9 +8,9 @@ var geocodeAddress = (address, apiKey, callback) => {
         url: `https://api.opencagedata.com/geocode/v1/json?q=${encodedAddress}&key=${apiKey}`,
         json: true
     }, (error, response, body) => {
-        if (error) {
+        if (body.total_results === 0) {
             callback({
-                error
+                error : 'Not Found'
             });
         } else if (body.status.message === 'OK') {
             callback(undefined, {

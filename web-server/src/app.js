@@ -49,33 +49,33 @@ app.get('/weather', (req, res) => {
         res.send({
             error: 'You must provide all.'
         });
+    } else {
+        geocode.geocodeAddress(req.query.address, req.query.apiKeyMap, (error, mapResults) => {
+            if (error) {
+                res.send({
+                    nameSpace: 'map',
+                    error
+                });
+            } else {
+                console.log(JSON.stringify(mapResults, undefined, 2));
+                weather.getWeather(mapResults.latitude, mapResults.longitude, req.query.apiKeyWeather, (error, weatherResult) => {
+                    if (error) {
+                        res.send({
+                            nameSpace: 'weather',
+                            error
+                        });
+                    } else {
+                        console.log(`It's currently ${weatherResult.temperature}. It feels like ${weatherResult.apparentTemperature}.`);
+                        res.send({
+                            forecast: `It's currently ${weatherResult.temperature}. It feels like ${weatherResult.apparentTemperature}.`,
+                            location: req.query.address,
+                            address: mapResults.address
+                        });
+                    }
+                });
+            }
+        });
     }
-
-    geocode.geocodeAddress(req.query.address, req.query.apiKeyMap, (error, mapResults) => {
-        if (error) {
-            res.send({
-                nameSpace: 'map',
-                error
-            });
-        } else {
-            console.log(JSON.stringify(mapResults, undefined, 2));
-            weather.getWeather(mapResults.latitude, mapResults.longitude, req.query.apiKeyWeather, (error, weatherResult) => {
-                if (error) {
-                    res.send({
-                        nameSpace: 'weather',
-                        error
-                    });
-                } else {
-                    console.log(`It's currently ${weatherResult.temperature}. It feels like ${weatherResult.apparentTemperature}.`);
-                    res.send({
-                        forecast: `It's currently ${weatherResult.temperature}. It feels like ${weatherResult.apparentTemperature}.`,
-                        location: req.query.address,
-                        address: mapResults.address
-                    });
-                }
-            });
-        }
-    });
 });
 
 app.get('*', (req, res) => {
