@@ -7,10 +7,10 @@ const {MongoClient, ObjectID} = require('mongodb');
 const connectionURL = 'mongodb://127.0.0.1:27017';
 const databaseName = 'task-manager';
 
-const id = new ObjectID();
-console.log(id.id.length);
-console.log(id.toHexString().length);
-console.log(id.getTimestamp());
+// const id = new ObjectID();
+// console.log(id.id.length);
+// console.log(id.toHexString().length);
+// console.log(id.getTimestamp());
 
 MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     if (error) {
@@ -91,8 +91,43 @@ MongoClient.connect(connectionURL, {useNewUrlParser: true}, (error, client) => {
     //     console.log(count)
     // })
 
-    db.collection('tasks').find({completed: false}).toArray((error, task) => {
-        console.log(task)
-        // task.map(((t,index) =>console.log(`task number ${index+1} is ${t}`)))
-    })
+    // db.collection('tasks').find({completed: false}).toArray((error, task) => {
+    //     console.log(task)
+    //     // task.map(((t,index) =>console.log(`task number ${index+1} is ${t}`)))
+    // })
+
+    // const updatePromise = db.collection('users').updateOne({
+    //     _id: new ObjectID('5ffbc3b4402302106a0a1c2c')
+    // }, {
+    //     $inc: {
+    //         age: 1
+    //     }
+    // })
+    //
+    // updatePromise
+    //     .then(result => console.log(result))
+    //     .catch(error => console.log(error))
+
+    // db.collection('tasks').updateMany({
+    //         completed: false
+    //     },
+    //     {
+    //         $set: {
+    //             completed: true
+    //         }
+    //     })
+    //     .then(result => console.log(result.modifiedCount))
+    //     .catch(error => console.log(error))
+
+    // db.collection('users')
+    //     .deleteMany({
+    //         age: 27
+    //     })
+    //     .then(result => console.log(result.deletedCount))
+    //     .catch(error => console.log(error))
+    
+    db.collection('tasks')
+        .deleteOne({description:'Clean the house'})
+        .then(result => console.log(result))
+        .catch(error => console.log(error))
 })
