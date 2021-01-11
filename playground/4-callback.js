@@ -1,15 +1,14 @@
-const add = (a, b, callback) => {
-    let c;
-    console.log(c)
-    c = 3 + 4;
-    console.log(c)
+const doWorkCallBack = (callback) => {
     setTimeout(() => {
-        callback(a, b);
-    }, 5000);
-};
+        // callback('This is error!', undefined)
+        callback(undefined, [1, 4, 7])
+    }, 2000)
+}
 
-const sum = (a, b) => {
-    console.log(a * b);
-};
+doWorkCallBack((error, result) => {
+    if (error) {
+        return console.log(error)
+    }
 
-add(3, 4, sum);
+    console.log(result)
+})
