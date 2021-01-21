@@ -3,25 +3,46 @@ const mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true //for future support
+    // useUnifiedTopology: true //for future support
 })
 
-const User = mongoose.model('User', {
-    name: {
+// const User = mongoose.model('User', {
+//     name: {
+//         type: String
+//     },
+//     age: {
+//         type: Number
+//     }
+// })
+//
+// const me = new User({
+//     name: 'Andrew',
+//     age: 27
+// })
+//
+// me.save().then(() => {
+//     console.log(me)
+// }).catch(e => {
+//     console.log('Error!', e)
+// })
+
+const Task = mongoose.model('Task', {
+    description: {
         type: String
     },
-    age: {
-        type: Number
+    completed: {
+        type: Boolean
     }
 })
 
-const me = new User({
-    name: 'Andrew',
-    age: 27
+const task = new Task({
+    description: 'shower booboo',
+    completed: false
 })
 
-me.save().then(() => {
-    console.log(me)
+
+task.save().then(() => {
+    console.log(task)
 }).catch(e => {
     console.log('Error!', e)
 })
