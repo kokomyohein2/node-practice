@@ -4,5 +4,6 @@ const mongoose = require('mongoose')
 mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api', {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useUnifiedTopology: true //for future support
+    useUnifiedTopology: true, //for future support
+    useFindAndModify:false // for deprecated findByIdAndUpdate
 })
